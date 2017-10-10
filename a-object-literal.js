@@ -1,4 +1,4 @@
-const log = require( '../cl.js' );
+const test = require( 'tape' );
 /**
  * JavaScript object literal pattern
  * Object literals create a pattern from nothing
@@ -24,5 +24,20 @@ var car2 = {
     }
 };
 
-log.cll( "car1.getInfo()", car1.getInfo() );
-log.cll( "car2.getInfo()", car2.getInfo() );
+test( "Object Literal Test", function( t ) {
+    t.plan( 4 );
+    var actual, expected;
+
+    actual = car1.getInfo();
+    expected = "Vehicle: 2000 Ford Fusion";
+
+    t.ok( car1, "car1 exists" );
+    t.isEqual( actual, expected, "car1.getInfo() matches expected" );
+    
+    actual = car2.getInfo();
+    expected = "Vehicle: 2010 BMW Z4";
+    
+    t.ok( car2, "car2 exists" );
+    t.isEqual( actual, expected, "car2.getInfo() matches expected" );
+} );
+
