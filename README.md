@@ -114,3 +114,45 @@ The encapsulation of the code to create an object is commonly referred to as usi
 Additionally, although the getVehicle function encapsulates the object creation, the properties are all public. If you want the data to be private, this approach won't work.
 
 Just as when using the literal object syntax, you might encounter the problem that every vehicle's type is Object, and you might want to create a Vehicle class to have a named `Vehicle` type.
+
+## Creating a class
+There is no _class_ keyword in JavaScript, but you can simulate a class by starting with a function, which is actually the _constructor function_ of the object.
+
+```javascript
+function Vehicle( theYear, theMake, theModel ) {
+    ...
+}
+```
+
+The next step is to ensure we implement encapsulation. Then we need to create separate objects, each with its own data.
+
+To implement encapsulation, use the _var_ keyword for the _year_, _make_, and _model_. This will make these variables private to the function. Notice that the _var_ keyword is not used with the `getInfo` variable because the `getInfo` variable needs to be public to be called from outside the object, but you don't want `getInfo` to be global. Assign `getInfo` to the current object by using the _this_ keyword. The result is a class that encapsulates the data and exposes _getInfo_ to retrieve the data in a controlled way as follows.
+
+```javascript
+function Vehicle( theYear, theMake, theModel ) {
+    var year = theYear;
+    var make = theMake;
+    var model = theModel;
+
+    this.getInfo - function() {
+        return 'Vehicle' + year + ' ' + make + ' ' + model;
+    };
+}
+```
+
+Remember that the _this_ keyword references the object that owns the current code. This means that we must use the _new_ keyword to create an object from the class. Otherwise, the _this_ keyword will reference the global object and `getInfo` will be referring to a global variable.
+
+```javascript
+var car1 = new Vehicle( 2000, 'Ford', 'Fusion' );
+var car2 = new Vehicle( 2010, 'BMW', 'Z4' );
+
+var carInfo = car1.getInfo(); // Vehicle: 2000 Ford Fusion
+```
+
+Notice that a new variable is defined, `car1`, and it is assigned the object that is created by using the _new_ keyword. After that, another new variable is defined, `car2`, and it is assigned the second `Vehicle` object created by using the _new_ keyword.
+
+Two instances of the `Vehicle` class are being created, which means that two `Vehicle` objects are being constructed. Each instance has its own data and its own copy of the `getInfo` method. The `getInfo` method is public but has access to the private data through _closure_. A method that is public but has access to private data is called a _privileged method_.
+
+You have now created a class and constructed objects from the class. The Vehicle function you've used is known as a _constructor function_. The _new_ keyword created an object and executed the constructor function to initialize the object by creating the `year`, `make`, and `model` private variables and the public `getInfo` variable.
+
+Each instance has these four variables, and memory is allocated for them. That's what you want for the data but is that what you want for the `getInfo` variable that references a function? The answer is that it depends on what you are trying to accomplish with your code.
