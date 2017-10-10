@@ -60,3 +60,17 @@ var car2 = {
 ```
 
 The `getInfo` property doesn't contain data; it references an anonymous function instead, so it's a _method_. The method uses the _this_ keyword to access the data. Remember that the _this_ keyword references the _object that owns the code_ where the _this_ keyword is. If the _this_ keyword were omitted, the code would look in the global namespace for _year_, _make_, and _model_.
+
+```javascript
+var car1 = {
+    year: 2000,
+    make: 'Ford',
+    model: 'Fusion',
+    repairs: ['repair1', 'repair2', 'repair3'],
+    getInfo: function() {
+        return 'Vehicle: ' + this.year + ' ' + this.make + ' ' + this.model;
+    }
+};
+```
+
+Because this is one of the easiest ways to create an object, you'll probably use it to gather data to send to other code. In this example, two instances of a type Object are created, and properties are dynamically added to each instance. This does not create a Vehicle type.

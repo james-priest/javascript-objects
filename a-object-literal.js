@@ -10,6 +10,7 @@ var car1 = {
     year: 2000,
     make: 'Ford',
     model: 'Fusion',
+    repairs: ['repair1', 'repair2', 'repair3'],    
     getInfo: function() {
         return 'Vehicle: ' + this.year + ' ' + this.make + ' ' + this.model;
     }
