@@ -1,6 +1,6 @@
 const test = require( 'tape' );
 /**
- * JavaScript dynamic object factory pattern
+ * JavaScript object clone using factory pattern
  * Object type can be used to create an object programmatically
  * Object has a prototype object that is cloned when you use the *new* keyword
  *   to create a new Object instance
