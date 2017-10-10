@@ -40,4 +40,3 @@ test( "Object Literal Test", function( t ) {
     t.ok( car2, "car2 exists" );
     t.isEqual( actual, expected, "car2.getInfo() matches expected" );
 } );
-
