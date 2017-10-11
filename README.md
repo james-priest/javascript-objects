@@ -122,7 +122,7 @@ Additionally, although the getVehicle function encapsulates the object creation,
 Just as when using the literal object syntax, you might encounter the problem that every vehicle's type is Object, and you might want to create a Vehicle class to have a named `Vehicle` type.
 
 ## Creating a class
-There is no _class_ keyword in JavaScript, but you can simulate a class by starting with a function, which is actually the _constructor function_ of the object.
+There is no _class_ keyword in JavaScript (ES5), but you can simulate a class by starting with a function, which is actually the _constructor function_ of the object.
 
 ```javascript
 function Vehicle( theYear, theMake, theModel ) {
@@ -136,11 +136,11 @@ To implement encapsulation, use the _var_ keyword for the _year_, _make_, and _m
 
 ```javascript
 function Vehicle( theYear, theMake, theModel ) {
-    var year = theYear;
-    var make = theMake;
-    var model = theModel;
+    var year = theYear; // private
+    var make = theMake; // private
+    var model = theModel; // private
 
-    this.getInfo - function() {
+    this.getInfo - function() { // public
         return 'Vehicle' + year + ' ' + make + ' ' + model;
     };
 }
@@ -161,4 +161,57 @@ Two instances of the `Vehicle` class are being created, which means that two `Ve
 
 You have now created a class and constructed objects from the class. The Vehicle function you've used is known as a _constructor function_. The _new_ keyword created an object and executed the constructor function to initialize the object by creating the `year`, `make`, and `model` private variables and the public `getInfo` variable.
 
-Each instance has these four variables, and memory is allocated for them. That's what you want for the data but is that what you want for the `getInfo` variable that references a function? The answer is that it depends on what you are trying to accomplish with your code. In some scenarios, this behavior is desirable, but in other scenarios, you might have wanted to replace the function across all objects. To do this, you can use the _prototype_ pattern.
+Each instance has these four variables, and memory is allocated for them. That's what you want for the data but is that what you want for the `getInfo` variable that references a function? The answer is that it depends on what you are trying to do. In some scenarios, this behavior is desirable, but in others, you might want to replace the function across all objects. To do this, you need to use the _prototype_ pattern.
+
+## Using the prototype pattern
+In JavaScript, everything, including the function, is an Object type, which has a _prototype_ property. The prototype itself is an object containing properties and methods that should be available to all instances of the type you're working with.
+
+However, this prototype is typically specified externally to the constructor function, **so the prototype doesn't have access to private variables**. Therefore, you must expose the data for the prototype to work.
+
+The following is an example of using the prototype property to create a single `getInfo` method that is shared across all instances.
+
+```javascript
+function Vehicle( theYear, theMake, theModel) {
+    this.year = theYear; // public
+    this.make = theMake; // public
+    this.model = theMode; // public
+}
+Vehicle.prototype.getInfo = function() {
+    return 'Vehicle: " + this.year + ' ' + this.make + ' ' + this.model;
+}
+```
+
+Remember, _this_ exposes the variable as a public property on `Vehicle` and _var_ defines the variable as private.
+
+You might use the prototype property when creating functions that will be shared across all instances, but remember that the prototype is defined externally to the constructor function so all properties MUST BE PUBLIC using the _this_ keyword.
+
+Therefore, if you don't need to replace individual instance functions and you don't mind making your data public, the prototype is efficient.
+
+## Debating the prototype/private compromise with getters
+There can be a compromise in which you can have private data that is readable by creating a method for retrieving the data, also known as a _getter_. (This getter will have no _setter_.) This requires you to write a function that is copied for each object, but you should keep the function as small as possible as shown here.
+
+```javascript
+function Vehicle( theYear, theMake, theModel ) {
+    var year = theYear; //private
+    var make = theMake; // private
+    var model = theModel; // private
+    this.getYear = function() { return year; };
+    this.getMake = function() { return make; };
+    this.getModel = function() { return model; };
+}
+Vehicle.prototype.getInfo = function() {
+    return 'Vehicle: ' + this.getYear() + ' ' + this.getMake() + ' ' + this.getModel();
+};
+```
+
+Here we can replace the `getInfo` method and, because the data is exposed as read-only, it's available to be used in the new method.
+
+```javascript
+Vehicle.prototype.getInfo = function() {
+        return 'Car Year: ' + this.getYear()
+            + ' Make: ' + this.getMake()
+            + ' Model: ' + this.getModel();
+    };
+```
+
+In addition, the privileged getters are small, which minimizes the amount of memory consumed when each instance has a copy of the method. **Remember to only create getter methods as needed and to keep them small and concise.**
