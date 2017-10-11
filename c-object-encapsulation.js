@@ -49,4 +49,3 @@ test( "Encapsulation Test", function( t ) {
 
 // Run code:
 // node c-object-encapsulation.js
-
