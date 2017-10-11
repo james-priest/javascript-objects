@@ -1,7 +1,10 @@
 const test = require( 'tape' );
 /**
  * JavaScript prototype getters with private data properties
- * 
+ * The pattern below shows how to make getters to access private data
+ * There is no setter equivalent
+ * Each instance has it's own copy of the getter methods so make sure to keep
+ *   them as small as possible
  */
 
 function Vehicle( theYear, theMake, theModel ) {
