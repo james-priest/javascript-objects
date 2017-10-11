@@ -1,15 +1,21 @@
 <!-- markdownlint-disable MD022 MD032 -->
 # Creating JavaScript Objects
-Largely taken from [Programming in HTML5 with JavaScript and CSS3](https://www.amazon.com/Training-Guide-Programming-JavaScript-Microsoft/dp/0735674388) by Glenn Johnson, specifically, _Chapter 6: Essential JavaScript & jQuery_.
+from [Programming in HTML5 with JavaScript and CSS3](https://www.amazon.com/Training-Guide-Programming-JavaScript-Microsoft/dp/0735674388) by Glenn Johnson, specifically, _Chapter 6: Essential JavaScript & jQuery_.
 
 ## JavaScript Objects - MS Approach
-In JavaScript everything is an object.
+In JavaScript everything can be thought of as an object. This includes the six primitive data types:
 
-- _Numbers_, _strings_, and _arrays_
-- _Objects_, _functions_, and _undefined_
+- `String`, `Number`, `Boolean`
+- `Symbol`, `null`, and `undefined`
+
+JavaScript will also include complex data structure such as:
+
+- _Object_, _Array_, and _Function_
+- _Math_, _Date_, _JSON_, _RegExp_, and _Error_
+- _NaN_, _Infinity_, and _-Infinity_
 
 ## Object-oriented terminology
-In many object-oriented language, you create a _class_, which is a blueprint for an object. Like a blueprint for a house, the blueprint isn't the house; it's the instructions that define the _type_ of object that you'll be constructing.
+In many object-oriented languages, you create a _class_, which is a blueprint for an object. Like a blueprint for a house, the blueprint isn't the house; it's the instructions that define the _type_ of object that you'll be constructing.
 
 By using a house blueprint, you can _construct_ many houses that are based on the blueprint. Each house is an _object_ of type house, also known as an _instance_ of the house type.
 
@@ -155,4 +161,4 @@ Two instances of the `Vehicle` class are being created, which means that two `Ve
 
 You have now created a class and constructed objects from the class. The Vehicle function you've used is known as a _constructor function_. The _new_ keyword created an object and executed the constructor function to initialize the object by creating the `year`, `make`, and `model` private variables and the public `getInfo` variable.
 
-Each instance has these four variables, and memory is allocated for them. That's what you want for the data but is that what you want for the `getInfo` variable that references a function? The answer is that it depends on what you are trying to accomplish with your code.
+Each instance has these four variables, and memory is allocated for them. That's what you want for the data but is that what you want for the `getInfo` variable that references a function? The answer is that it depends on what you are trying to accomplish with your code. In some scenarios, this behavior is desirable, but in other scenarios, you might have wanted to replace the function across all objects. To do this, you can use the _prototype_ pattern.
