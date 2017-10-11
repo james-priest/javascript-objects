@@ -51,7 +51,6 @@ test( "Instance Test Using Prototype Replace Function", function( t ) {
     expected = "Car: 2000 Ford Fusion";    
     t.isEqual( actual, expected, "car1.getInfo() matches expected" );
 
-
     actual = car2.getInfo();
     expected = "Car: 2010 BMW Z4";    
     t.isEqual( actual, expected, "car2.getInfo() matches expected" );
