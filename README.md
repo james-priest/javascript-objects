@@ -6,13 +6,13 @@ from [Programming in HTML5 with JavaScript and CSS3](https://www.amazon.com/Trai
 In JavaScript everything can be thought of as an object. This includes the six primitive data types:
 
 - `String`, `Number`, `Boolean`
-- `Symbol`, `null`, and `undefined`
+- `Symbol`, `null`, `undefined`
 
 JavaScript will also include complex data structure such as:
 
-- _Object_, _Array_, and _Function_
-- _Math_, _Date_, _JSON_, _RegExp_, and _Error_
-- _NaN_, _Infinity_, and _-Infinity_
+- `Object`, `Array`, `Function`
+- `Math`, `Date`, `JSON`, `RegExp`, `Error`
+- `NaN`, `Infinity`, `-Infinity`
 
 ## Object-oriented terminology
 In many object-oriented languages, you create a _class_, which is a blueprint for an object. Like a blueprint for a house, the blueprint isn't the house; it's the instructions that define the _type_ of object that you'll be constructing.
@@ -177,7 +177,7 @@ function Vehicle( theYear, theMake, theModel) {
     this.model = theMode; // public
 }
 Vehicle.prototype.getInfo = function() {
-    return 'Vehicle: " + this.year + ' ' + this.make + ' ' + this.model;
+    return 'Vehicle: ' + this.year + ' ' + this.make + ' ' + this.model;
 }
 ```
 
@@ -215,3 +215,99 @@ Vehicle.prototype.getInfo = function() {
 ```
 
 In addition, the privileged getters are small, which minimizes the amount of memory consumed when each instance has a copy of the method. **Remember to only create getter methods as needed and to keep them small and concise.**
+
+## Implementing namespaces
+One problem to watch for is the pollution of the global namespace. As your program gets larger and libraries are added, more entries are added to the global object.
+
+JavaScript doesn't have a namespace keyword, but you can implement the equivalent of a namespace by using techniques that are similar to those used to create objects.
+
+```javascript
+// Bad pollution of global namespace
+var vehicleCount = 5;
+var vehicle = new Array();
+
+function Car() { }
+function Truck() { }
+
+var repair = {
+    description: 'changed spark plugs',
+    cost: 100
+};
+```
+
+This code places five entries in the global namespace, and as the application grows, this namespace pollution also grows. _You can implement the namespace pattern to solve the problem._
+
+```javascript
+// Single entry in global namespace
+var myApp = { };
+
+myApp.vehicleCount = 5;
+
+myApp.vehicles = new Array();
+
+myApp.Car = function() { };
+myApp.Truck = function() { };
+
+myApp.repair = {
+    description: 'changed spark plugs',
+    cost: 100
+};
+```
+
+Here, `myApp` is the only entry in the global namespace. It represents the name of the application and its root namespace. _Notice that the object literal syntax is used to create an empty object and assign it to myApp._ Everything else is added to the object. Sub-namespaces can also be created and assigned to `myApp`.
+
+You can see a namespace was created by creating an object. Although only one entry is made in the global namespace, all the members of `myApp` are globally accessible.
+
+### Namespace singleton object
+You might also want to have logic to create the namespace object only if it hasn't been created. In the following example, the code for `myApp` is modified to create the namespace only if it doesn't already exist. This is done by creating a new object if `myApp` does not have a value.
+
+```javascript
+var myApp = myApp || {};
+```
+
+You can use the object techniques defined earlier to make some members of the namespace private and some public. The difference is that the namespace is a _singleton object_, so you create a single instance for the namespace.
+
+You don't need to worry about functions defined in the constructor function consuming additional memory for each instance because there is only one instance.
+
+### Creating namespace with IIFE for data encapsulation
+
+Here is an example of the use of an _immediately invoked function expression_ (IIFE) to create the `myApp` namespace in which `Car` and `Truck` are public, but `vehicleCount`, `vehicles`, and `repair` are private.
+
+```javascript
+(function() {
+    this.myApp = this.myApp || {};  // singleton pattern
+    var ns = this.myApp;
+
+    var vehicleCount = 5;           // private
+    var vehicles = new Array();     // private
+
+    ns.Car = function() {};         // public
+    ns.Truck = function() {};       // public
+
+    var repair = {                  // private
+        description: 'changed spark plugs',
+        cost: 100
+    }
+})();
+```
+
+An _IIFE_ (pronounced iffy) is an anonymous function expression that has a set of parentheses at the end of it which indicates that you want to execute the function. The anonymous function expression is wrapped in parentheses to the the JavaScript  interpreter that the function isn't only being defined; it's also being executed when the file is loaded.
+
+In the above IIFE, the first line creates the myApp namespace if it doesn't already exist, which represents the singleton object that is used as the namespace. next, an `ns` variable (for namespace) is created as an alias to the namespace to save typing within the IIFE, so `ns` can be used in place of the `this.myApp`. After that, the private members of the namespace are defined by using the _var_ keyword. `Car` and `Truck` are public, so they are prefixed with `ns`.
+
+### Creating a sub-namespace
+The following example shows adding a `billing` namespace under the `myApp` namespace.
+
+```javascript
+(function() {
+    this.myApp = this.myApp || {};
+    var rooNS = this.myApp;
+    rootNS.billing = rootNS.billing || {};
+    var ns = rootNS.billing;
+
+    var taxRate = 0.05;
+    ns.Invoice = function() {};
+})();
+```
+
+This example also implements an IIFE to create the namespace. First, the `myApp` namespace is created if it doesn't already exist and is assigned to a local `rootNS` variable to save typing inside the namespace. Next, the billing namespace is created and assigned to the local `ns` variable to save typing inside the namespace. Finally, the private `taxRate` propertty is defined while the public `Invoice` is defined.
