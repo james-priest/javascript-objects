@@ -1,6 +1,11 @@
 const test = require( 'tape' );
 /**
- * JavaScript Vehicle base class
+ * JavaScript base class
+ * Based on "is a" relationships; apple is a fruit; employee is a person, etc.
+ * Finding these relationships provide an opportunity for code reuse.
+ * Create a Vehicle object with all common Vehicle traits defined in it
+ * Then create each vehicle type to inherit from Vehicle so you don't have to
+ *   duplicate code in each vehicle type
  */
 
 var Vehicle = ( function() {
