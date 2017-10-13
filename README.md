@@ -320,7 +320,7 @@ If you have several types of vehicles, you can create `Vehicle` with the common 
 As an example of inheritance, start by defining the base case. Using the `Vehicle` example, the following is an example of a Vehicle base class.
 
 ```javascript
-var Vehicle = ( function() {
+var Vehicle = (function() {
     function Vehicle( theYear, theMake, theModel ) {
         this.year = theYear;
         this.make = theMake;
@@ -352,3 +352,114 @@ var v = new Vehicle( 2012, 'Toyota', 'Rav4' );
 var actual = v.getInfo();
 var expected = '2012 Toyota Rav4';
 ```
+
+Now that  you have a Vehicle parent class with three properties and two methods, you can create child classes for `Car` and `Boat` that inherit from `Vehicle`.
+
+Start by writing an IIFE but, this time, pass `Vehicle` into the IIFE as follows.
+
+```javascript
+var Car = (function( parent ) {
+    ...
+})(Vehicle);
+```
+
+Because Vehicle in this example is the `Vehicle` variable not the Vehicle function, `Car` needs to be defined after `Vehicle`. `Vehicle` is passed into the IIFE and is available inside the IIFE as _parent_.
+
+Next, the function for `Car` can be added inside the IIFE. Inside the function, add any additional properties, such as `wheelQuantity`, and initialize to four.
+
+In the function, call the parent class's constructor for `Car` to allocate memory slots for _year_, _make_, and _model_. To call the parent constructor function, use a _call_ method that exists on the Function object, which accepts a parameter for the `this` object, and parameters on the function being called, as follows.
+
+```javascript
+var Car = (function( parent ) {
+    function Car( year, make, model) {
+        parent.call(this, year, make, model);
+        this.wheelQuantity = 4;
+    }
+    return Car;
+})(Vehicle)
+```
+
+Notice how this example used the _call_ method to modify the `this` object; the `this` object is the `Car` object, so the call to the parent construction function creates _year_, _make_, and _model_ on the `Car` object.
+
+Next, the inheritance must be set up. You might think that you've already set up inheritance because the previous example calls the parent class's constructor, and the _year_, _make_, and _model_ are created on `Car`, but `getInfo` and `startEngine` were not inherited.
+
+The inheritance is accomplished by changing the `Car` prototype object to be a new `Vehicle` object. Remember that the prototype is the object that is cloned to create the new object. By default, the prototype is of type Object. After the new `Vehicle` is assigned to the prototype, the constructor of that `Vehicle` is changed to be the `Car` constructor as follows.
+
+```javascript
+var Car = (function( parent ) {
+    Car.prototype = new Vehicle();          // <-- here
+    car.prototype.constructor = Car;        // <-- here
+    function Car( year, make, model ) {
+        parent.call( this, year, make, model );
+        this.wheelQuantity = 4;
+    }
+    return Car;
+})(Vehicle);
+```
+
+Finally, you can add more methods into `Car`. In this example, the _getInfo_ method is added, which replaces the `Vehicle` getInfo method. The new `getInfo` gets some code reuse by calling the existing `getInfo` method on the parent `Vehicle` object's prototype. However, you must use the _call_ method and pass the `this` object as follows.
+
+```javascript
+var Car = (function( parent ) {
+    Car.prototype = new Vehicle();
+    Car.prototype.constructor = Car;
+    function Car( year, make, model ) {
+        parent.call( this, year, make, model );
+        this.wheelQuantity = 4;
+    }
+    Car.prototype.getInfo = function() {                                    // <-- here
+        return 'Vehicle Type: Car ' + parent.prototype.getInfo.call(this);  // <-- here
+    };                                                                      // <-- here
+    return Car;
+})(Vehicle);
+```
+
+This completes `Car`, and `Boat` is similar except that `Boat` has a `propellerBladeQuantity`, which is initialized to three, instead of the `wheelQuantity` property. In addition, `getInfo` returns the vehicle type of `Boat` and calls the `Vehicle` `getInfo` method as follows.
+
+```javascript
+var Boat = (function( parent ) {
+    Boat.prototype = new Vehicle();
+    Boat.prototype.constructor = Car;
+    function Boat( year, make, model ) {
+        parent.call( this, year, make, model );
+        this.propellerBladeQuantity = 3;
+    }
+    Boat.prototype.getInfo = function() {
+        return 'Vehicle Type: Boat ' + parent.prototype.getInfo.call(this);
+    };
+    return Boat;
+})(Vehicle);
+```
+
+To create the `Car` and `Boat` objects, you use the _new_ keyword with the `Car` or `Boat` variable. The following creates instances of both `Car` and `Boat` and invokes each of their object-specific methods.
+
+```javascript
+var c = new Car( 2012, 'Toyota', 'Rav4' );
+c.wheelQuantity; // 4
+c.startEngine(); // 'Vroom'
+
+var b = new Boat(1994, 'Sea Ray', 'Signature 200');
+b.propellerBladeQuantity; // 3
+b.startEngine(); // 'Vroom'
+```
+
+## Lesson Summary
+
+- A class is a blueprint for an object in which an object is an instance of a class.
+- The three pillars of object-oriented programming are encapsulation, inheritance, and polymorphism.
+- The class from which you inherit is called the parent, base, super, or generalized class. The class that is derived from the parent is called the child, derived, sub, or specialized class. You can implement inheritance by replacing the Child class prototype with a new instance of the parent and replacing its constructor with the Child constructor function
+- JavaScript is a prototype-based, object-oriented programming language. A prototype is the object used to create a new instance.
+- The _literal pattern_ can be used to create an object by using curly braces to create the object. The _factory pattern_ can be used to create a dynamic object.
+- JavaScript does not have a class keyword but you can simulate a class by defining a function.
+- Creating private members is possible but usually involves creating privileged getter methods that can be memory consuming.
+- The _function_ is an object. The function that simulates a class is called the _constructor function_.
+- Namespaces can be created by using an immediately invoked function expression (IIFE).
+
+## Lesson Review
+
+1. What is the blueprint for an object called?
+    - class
+1. What does JavaScript use as a starting object when constructing a new object?
+    - prototype
+1. How is inheritance supported in JavaScript?
+    - You replace the prototype of the child object with a new instance of the parent object and then replace the prototype constructor with the child constructor.
