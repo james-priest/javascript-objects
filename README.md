@@ -311,3 +311,44 @@ The following example shows adding a `billing` namespace under the `myApp` names
 ```
 
 This example also implements an IIFE to create the namespace. First, the `myApp` namespace is created if it doesn't already exist and is assigned to a local `rootNS` variable to save typing inside the namespace. Next, the billing namespace is created and assigned to the local `ns` variable to save typing inside the namespace. Finally, the private `taxRate` propertty is defined while the public `Invoice` is defined.
+
+## Implementing inheritance
+JavaScript provides the ability to implement inheritance, which is useful when you can define the relationship between two objects as an "is a" relationship. For example, and apple is a fruit, an employee is a person, and a piano is an instrument. _You look for "is a " relationships because they provide an opportunity to implement code reuse_.
+
+If you have several types of vehicles, you can create `Vehicle` with the common vehicle traits defined in it. After `Vehicle` is created, you can create each vehicle type and inherit from `Vehicle` so you don't need duplicate code in each vehicle type.
+
+As an example of inheritance, start by defining the base case. Using the `Vehicle` example, the following is an example of a Vehicle base class.
+
+```javascript
+var Vehicle = ( function() {
+    function Vehicle( theYear, theMake, theModel ) {
+        this.year = theYear;
+        this.make = theMake;
+        this.model = theModel;
+    }
+    Vehicle.prototype.getInfo = function() {
+        return this.year + ' ' + this.make + ' ' + this.model;
+    };
+    Vehicle.prototype.startEngine = function() {
+        return 'Vroom';
+    };
+    return Vehicle;
+})();
+```
+
+This class is wrapped in an IIFE. The wrapper encapsulates the function and the Vehicle prototype. There is no attempt to make the data private. The code works as follows:
+
+- When the code is loaded into the browser, the IIFE is immediately invoked
+- A nested function called Vehicle is defined in the IIFE
+- The Vehicle function's prototype defined the getInfo and startEngine functions that are on every instance of Vehicle
+- A reference to the Vehicle function is returned, which is assigned to the `Vehicle` variable
+
+**This is a great way to create a class, and all future class examples use this pattern.**
+
+To create `Vehicle` objects, you use the _new_ keyword with the `Vehicle` variable. The following creates an instance of `Vehicle` and invokes the `getInfo` method.
+
+```javascript
+var v = new Vehicle( 2012, 'Toyota', 'Rav4' );
+var actual = v.getInfo();
+var expected = '2012 Toyota Rav4';
+```
