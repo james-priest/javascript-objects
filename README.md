@@ -2,6 +2,23 @@
 # Creating JavaScript Objects
 from [Programming in HTML5 with JavaScript and CSS3](https://www.amazon.com/Training-Guide-Programming-JavaScript-Microsoft/dp/0735674388) by Glenn Johnson, specifically, _Chapter 6: Essential JavaScript & jQuery_.
 
+- [JavaScript Objects - MS Approach](#javascript-objects---ms-approach "toc")
+- [Object-oriented terminology](#object-oriented-terminology "toc")
+- [JavaScript's prototypal nature](#javascripts-prototypal-nature "toc")
+- [JavaScript's object-oriented caveat](#javascripts-object-oriented-caveat "toc")
+- [JavaScript object literal pattern](#javascript-object-literal-pattern)
+- [Creating dynamic objects by using the factory pattern](#creating-dynamic-objects-by-using-the-factory-pattern)
+- [Creating a class](#creating-a-class)
+- [Using the prototype pattern](#using-the-prototype-pattern)
+- [Debating the prototype/private compromise with getters](#debating-the-prototypeprivate-compromise-with-getters)
+- [Implementing namespaces](#implementing-namespaces)
+  - [Namespace singleton object](#namespace-singleton-object)
+  - [Creating namespace with IIFE for data encapsulation](#creating-namespace-with-iife-for-data-encapsulation)
+  - [Creating a sub-namespace](#creating-a-sub-namespace)
+- [Implementing inheritance](#implementing-inheritance)
+- [Lesson Summary](#lesson-summary)
+- [Lesson Review](#lesson-review)
+
 ## JavaScript Objects - MS Approach
 In JavaScript everything can be thought of as an object. This includes the six primitive data types:
 
