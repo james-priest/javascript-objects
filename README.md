@@ -287,13 +287,13 @@ Here is an example of the use of an _immediately invoked function expression_ (I
     var repair = {                  // private
         description: 'changed spark plugs',
         cost: 100
-    }
+    };
 })();
 ```
 
 An _IIFE_ (pronounced iffy) is an anonymous function expression that has a set of parentheses at the end of it which indicates that you want to execute the function. The anonymous function expression is wrapped in parentheses to tell the JavaScript  interpreter that the function isn't only being defined; it's also being executed when the file is loaded.
 
-In the above IIFE, the first line creates the myApp namespace if it doesn't already exist, which represents the singleton object that is used as the namespace. Next, an `ns` variable (for namespace) is created as an alias to the namespace. This saves typing but most importantly creates a memory pointer so the interpreter doesn't have to traverse the object chain each time we want to access a nested property. The result is `ns` can be used in place of the `this.myApp`. After that, the private members of the namespace are defined by using the _var_ keyword. `Car` and `Truck` are public, so they are prefixed with `ns`.
+In the above IIFE, the first line creates the myApp namespace if it doesn't already exist, which represents the singleton object that is used as the namespace. Next, an `ns` variable (for namespace) is created as an alias to the namespace. This saves typing but most importantly creates a named "memory pointer" so the interpreter doesn't have to traverse the object chain each time we want to access a nested property. The result is `ns` can be used in place of the `this.myApp`. After that, the private members of the namespace are defined by using the _var_ keyword. `Car` and `Truck` are public, so they are prefixed with `ns`.
 
 ### Creating a sub-namespace
 The following example shows adding a `billing` namespace under the `myApp` namespace.
