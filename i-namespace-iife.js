@@ -23,7 +23,7 @@ const test = require( 'tape' );
     };
 })();
 
-test( "Namespace test", function( t ) {
+test( "Namespace IIFE test", function( t ) {
     t.plan( 6 );
     var actual, expected;
 
