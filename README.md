@@ -2,22 +2,23 @@
 # Creating JavaScript Objects
 from [Programming in HTML5 with JavaScript and CSS3](https://www.amazon.com/Training-Guide-Programming-JavaScript-Microsoft/dp/0735674388) by Glenn Johnson, specifically, _Chapter 6: Essential JavaScript & jQuery_.
 
-- [JavaScript Objects - MS Approach](#javascript-objects---ms-approach "toc")
-- [Object-oriented terminology](#object-oriented-terminology "toc")
-- [JavaScript's prototypal nature](#javascripts-prototypal-nature "toc")
-- [JavaScript's object-oriented caveat](#javascripts-object-oriented-caveat "toc")
-- [JavaScript object literal pattern](#javascript-object-literal-pattern)
-- [Creating dynamic objects by using the factory pattern](#creating-dynamic-objects-by-using-the-factory-pattern)
-- [Creating a class](#creating-a-class)
-- [Using the prototype pattern](#using-the-prototype-pattern)
-- [Debating the prototype/private compromise with getters](#debating-the-prototypeprivate-compromise-with-getters)
-- [Implementing namespaces](#implementing-namespaces)
-  - [Namespace singleton object](#namespace-singleton-object)
-  - [Creating namespace with IIFE for data encapsulation](#creating-namespace-with-iife-for-data-encapsulation)
-  - [Creating a sub-namespace](#creating-a-sub-namespace)
-- [Implementing inheritance](#implementing-inheritance)
-- [Lesson Summary](#lesson-summary)
-- [Lesson Review](#lesson-review)
+## Table of Contents
+1. [JavaScript Objects - MS Approach](#javascript-objects---ms-approach "toc")
+1. [Object-oriented terminology](#object-oriented-terminology "toc")
+1. [JavaScript's prototypal nature](#javascripts-prototypal-nature "toc")
+1. [JavaScript's object-oriented caveat](#javascripts-object-oriented-caveat "toc")
+1. [JavaScript object literal pattern](#javascript-object-literal-pattern)
+1. [Creating dynamic objects by using the factory pattern](#creating-dynamic-objects-by-using-the-factory-pattern)
+1. [Creating a class](#creating-a-class)
+1. [Using the prototype pattern](#using-the-prototype-pattern)
+1. [Debating the prototype/private compromise with getters](#debating-the-prototypeprivate-compromise-with-getters)
+1. [Implementing namespaces](#implementing-namespaces)
+    - [Namespace singleton object](#namespace-singleton-object)
+    - [Creating namespace with IIFE for data encapsulation](#creating-namespace-with-iife-for-data-encapsulation)
+    - [Creating a sub-namespace](#creating-a-sub-namespace)
+1. [Implementing inheritance](#implementing-inheritance)
+1. [Lesson Summary](#lesson-summary)
+1. [Lesson Review](#lesson-review)
 
 ## JavaScript Objects - MS Approach
 In JavaScript everything can be thought of as an object. This includes the six primitive data types:
@@ -30,6 +31,8 @@ JavaScript will also include complex data structures such as:
 - `Object`, `Array`, `Function`
 - `Math`, `Date`, `JSON`, `RegExp`, `Error`
 - `NaN`, `Infinity`, `-Infinity`
+
+**[⬆ top](#creating-javascript-objects "toc")**
 
 ## Object-oriented terminology
 In many object-oriented languages, you create a _class_, which is a blueprint for an object. Like a blueprint for a house, the blueprint isn't the house; it's the instructions that define the _type_ of object that you'll be constructing.
@@ -48,15 +51,21 @@ The _parent class_ is also known as the _base_ class, the _super_ class, or the 
 
 In object-oriented programming, objects can have **data implemented as properties** and **behaviors implemented as methods**. A _property_ is essentially a variable that is defined on an object and owned by the object. A _method_ is a function that is defined on an object and owned by the object.
 
+**[⬆ top](#creating-javascript-objects "toc")**
+
 ## JavaScript's prototypal nature
 JavaScript is a prototype-based, functional programming language that uses objects. In JavaScript everything is an object, and you either create a new object from nothing, or you create an object from a clone of an existing object, known as a _prototype_.
 
 JavaScript wasn't designed to be class-based but this behavior can be approximated by using a function. Class-based, object-oriented purists dislike the idea of a function being used to simulate a class but this can work to approximate a class _constructor_.
 
+**[⬆ top](#creating-javascript-objects "toc")**
+
 ## JavaScript's object-oriented caveat
 _Achieving proper encapsulation of private data requires you to create copies of the functions that can access the private data for each object instance, which consumes memory. If you don't want to create copies of the method for each object instance, the data needs to be publicly exposed, thus losing the benefits of encapsulations, by which you hide object details that users shouldn't need to see._
 
 _The general consensus on the issue is that most people would rather expose the data to minimize wasteful memory consumption._
+
+**[⬆ top](#creating-javascript-objects "toc")**
 
 ## JavaScript object literal pattern
 - Object literals create a pattern from nothing.
@@ -100,6 +109,8 @@ var car1 = {
 
 Because this is one of the easiest ways to create an object, you'll probably use it to gather data to send to other code. In this example, two instances of a type Object are created, and properties are dynamically added to each instance. This does not create a Vehicle type.
 
+**[⬆ top](#creating-javascript-objects "toc")**
+
 ## Creating dynamic objects by using the factory pattern
 
 In addition to using the JavaScript literal object syntax, JavaScript has an Object type, and you can use it to create an object programmatically. **Object has a prototype object that is cloned when you use the _new_ keyword to create a new Object instance.** The prototype object has the following inherited methods.
@@ -137,6 +148,8 @@ The encapsulation of the code to create an object is commonly referred to as usi
 Additionally, although the getVehicle function encapsulates the object creation, the properties are all public. If you want the data to be private, this approach won't work.
 
 Just as when using the literal object syntax, you might encounter the problem that every vehicle's type is Object, and you might want to create a Vehicle class to have a named `Vehicle` type.
+
+**[⬆ top](#creating-javascript-objects "toc")**
 
 ## Creating a class
 There is no _class_ keyword in JavaScript (ES5), but you can simulate a class by starting with a function, which is actually the _constructor function_ of the object.
@@ -180,6 +193,8 @@ You have now created a class and constructed objects from the class. The Vehicle
 
 Each instance has these four variables, and memory is allocated for them. That's what you want for the data but is that what you want for the `getInfo` variable that references a function? The answer is that it depends on what you are trying to do. In some scenarios, this behavior is desirable, but in others, you might want to replace the function across all objects. To do this, you need to use the _prototype_ pattern.
 
+**[⬆ top](#creating-javascript-objects "toc")**
+
 ## Using the prototype pattern
 In JavaScript, everything, including the function, is an Object type, which has a _prototype_ property. The prototype itself is an object containing properties and methods that should be available to all instances of the type you're working with.
 
@@ -203,6 +218,8 @@ Remember, _this_ exposes the variable as a public property on `Vehicle` and _var
 You might use the prototype property when creating functions that will be shared across all instances, but remember that the prototype is defined externally to the constructor function so all properties MUST BE PUBLIC using the _this_ keyword.
 
 Therefore, if you don't need to replace individual instance functions and you don't mind making your data public, the prototype is efficient.
+
+**[⬆ top](#creating-javascript-objects "toc")**
 
 ## Debating the prototype/private compromise with getters
 There can be a compromise in which you can have private data that is readable by creating a method for retrieving the data, also known as a _getter_. (This getter will have no _setter_.) This requires you to write a function that is copied for each object, but you should keep the function as small as possible as shown here.
@@ -232,6 +249,8 @@ Vehicle.prototype.getInfo = function() {
 ```
 
 In addition, the privileged getters are small, which minimizes the amount of memory consumed when each instance has a copy of the method. **Remember to only create getter methods as needed and to keep them small and concise.**
+
+**[⬆ top](#creating-javascript-objects "toc")**
 
 ## Implementing namespaces
 One problem to watch for is the pollution of the global namespace. As your program gets larger and libraries are added, more entries are added to the global object.
@@ -275,6 +294,8 @@ Here, `myApp` is the only entry in the global namespace. It represents the name 
 
 You can see a namespace was created by creating an object. Although only one entry is made in the global namespace, all the members of `myApp` are globally accessible.
 
+**[⬆ top](#creating-javascript-objects "toc")**
+
 ### Namespace singleton object
 You might also want to have logic to create the namespace object only if it hasn't been created. In the following example, the code for `myApp` is modified to create the namespace only if it doesn't already exist. This is done by creating a new object if `myApp` does not have a value.
 
@@ -285,6 +306,8 @@ var myApp = myApp || {};
 You can use the object techniques defined earlier to make some members of the namespace private and some public. The difference is that the namespace is a _singleton object_, so you create a single instance for the namespace.
 
 You don't need to worry about functions defined in the constructor function consuming additional memory for each instance because there is only one instance.
+
+**[⬆ top](#creating-javascript-objects "toc")**
 
 ### Creating namespace with IIFE for data encapsulation
 
@@ -312,6 +335,8 @@ An _IIFE_ (pronounced iffy) is an anonymous function expression that has a set o
 
 In the above IIFE, the first line creates the myApp namespace if it doesn't already exist, which represents the singleton object that is used as the namespace. Next, an `ns` variable (for namespace) is created as an alias to the namespace. This saves typing but most importantly creates a named "memory pointer" so the interpreter doesn't have to traverse the object chain each time we want to access a nested property. The result is `ns` can be used in place of the `this.myApp`. After that, the private members of the namespace are defined by using the _var_ keyword. `Car` and `Truck` are public, so they are prefixed with `ns`.
 
+**[⬆ top](#creating-javascript-objects "toc")**
+
 ### Creating a sub-namespace
 The following example shows adding a `billing` namespace under the `myApp` namespace.
 
@@ -329,10 +354,16 @@ The following example shows adding a `billing` namespace under the `myApp` names
 
 This example also implements an IIFE to create the namespace. First, the `myApp` namespace is created if it doesn't already exist and is assigned to a local `rootNS` variable to save typing inside the namespace. Next, the billing namespace is created and assigned to the local `ns` variable to save typing inside the namespace. Finally, the private `taxRate` propertty is defined while the public `Invoice` is defined.
 
+**[⬆ top](#creating-javascript-objects "toc")**
+
 ## Implementing inheritance
 JavaScript provides the ability to implement inheritance, which is useful when you can define the relationship between two objects as an "is a" relationship. For example, and apple is a fruit, an employee is a person, and a piano is an instrument. _You look for "is a " relationships because they provide an opportunity to implement code reuse_.
 
 If you have several types of vehicles, you can create `Vehicle` with the common vehicle traits defined in it. After `Vehicle` is created, you can create each vehicle type and inherit from `Vehicle` so you don't need duplicate code in each vehicle type.
+
+**[⬆ top](#creating-javascript-objects "toc")**
+
+### Base class
 
 As an example of inheritance, start by defining the base case. Using the `Vehicle` example, the following is an example of a Vehicle base class.
 
@@ -369,6 +400,10 @@ var v = new Vehicle( 2012, 'Toyota', 'Rav4' );
 var actual = v.getInfo();
 var expected = '2012 Toyota Rav4';
 ```
+
+**[⬆ top](#creating-javascript-objects "toc")**
+
+### Child classes
 
 Now that  you have a Vehicle parent class with three properties and two methods, you can create child classes for `Car` and `Boat` that inherit from `Vehicle`.
 
@@ -460,6 +495,8 @@ b.propellerBladeQuantity; // 3
 b.startEngine(); // 'Vroom'
 ```
 
+**[⬆ top](#creating-javascript-objects "toc")**
+
 ## Lesson Summary
 
 - A class is a blueprint for an object in which an object is an instance of a class.
@@ -471,6 +508,8 @@ b.startEngine(); // 'Vroom'
 - Creating private members is possible but usually involves creating privileged getter methods that can be memory consuming.
 - The _function_ is an object. The function that simulates a class is called the _constructor function_.
 - Namespaces can be created by using an immediately invoked function expression (IIFE).
+
+**[⬆ top](#creating-javascript-objects "toc")**
 
 ## Lesson Review
 
