@@ -2,7 +2,13 @@
 # Creating JavaScript Objects
 Taken from _Chapter 6: Essential JavaScript & jQuery_ of [Programming in HTML5 with JavaScript and CSS3](https://www.amazon.com/Training-Guide-Programming-JavaScript-Microsoft/dp/0735674388) by Glenn Johnson.
 
-This was written out along with code examples as part of my study material for passing Microsoft's [Exam 70-480: Programming in HTML5 with JavaScript & CSS3](https://www.microsoft.com/en-us/learning/exam-70-480.aspx) certification exam.
+I wrote this out along with code examples as part of my study material for passing Microsoft's [Exam 70-480: Programming in HTML5 with JavaScript & CSS3](https://www.microsoft.com/en-us/learning/exam-70-480.aspx) certification exam. 
+
+Code examples use [Tape](https://github.com/substack/tape) (tap-producing test harness for node and browsers) which is a lightweight TDD package.
+
+```bash
+npm install tape --save-dev
+```
 
 ## Table of Contents
 1. [JavaScript Objects - MS Approach](#javascript-objects---ms-approach)
@@ -523,3 +529,5 @@ b.startEngine(); // 'Vroom'
     - prototype
 1. How is inheritance supported in JavaScript?
     - You replace the prototype of the child object with a new instance of the parent object and then replace the prototype constructor with the child constructor.
+
+**[⬆ top](#creating-javascript-objects)**
