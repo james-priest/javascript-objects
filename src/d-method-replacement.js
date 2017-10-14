@@ -41,8 +41,10 @@ test( "Function Replacement Test", function( t ) {
 
     actual = car2.getInfo();
     expected = "This is a car";    
-    t.isEqual( actual, expected, "car2.getInfo() was affected by change to car1.getInfo()" );
+    t.isEqual( actual, expected, "car2.getInfo() does not match expected" );
+
+    console.log("changing the method on one object does not carry over to other objects.")
 } );
 
 // Run code:
-// node c-object-encapsulation.js
+// node d-method-replacement.js
