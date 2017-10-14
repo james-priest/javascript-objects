@@ -1,0 +1,22 @@
+{
+  "name": "javascript-objects",
+  "version": "1.0.0",
+  "description": "<!-- markdownlint-disable MD022 MD032 -->\r # Creating JavaScript Objects\r Taken from _Chapter 6: Essential JavaScript & jQuery_ of [Programming in HTML5 with JavaScript and CSS3](https://www.amazon.com/Training-Guide-Programming-JavaScript-Microsoft/dp/0735674388) by Glenn Johnson.",
+  "main": "a-object-literal.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/james-priest/javascript-objects.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/james-priest/javascript-objects/issues"
+  },
+  "homepage": "https://github.com/james-priest/javascript-objects#readme",
+  "devDependencies": {
+    "tape": "^4.8.0"
+  }
+}
