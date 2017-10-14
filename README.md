@@ -2,7 +2,7 @@
 # Creating JavaScript Objects
 Taken from _Chapter 6: Essential JavaScript & jQuery_ of [Programming in HTML5 with JavaScript and CSS3](https://www.amazon.com/Training-Guide-Programming-JavaScript-Microsoft/dp/0735674388) by Glenn Johnson.
 
-I wrote this out along with code examples as part of my study material for passing Microsoft's [Exam 70-480: Programming in HTML5 with JavaScript & CSS3](https://www.microsoft.com/en-us/learning/exam-70-480.aspx) certification exam. 
+I wrote this out along with code examples as part of my study material for passing the Object-Oriented JavaScript portion of Microsoft's [Exam 70-480: Programming in HTML5 with JavaScript & CSS3](https://www.microsoft.com/en-us/learning/exam-70-480.aspx) certification exam. 
 
 Code examples use [Tape](https://github.com/substack/tape) (tap-producing test harness for node and browsers) which is a lightweight TDD package.
 
@@ -101,6 +101,8 @@ var car2 = {
 };
 ```
 
+[a-object-literal.js](src/a-object-literal.js)
+
 The `getInfo` property doesn't contain data; it references an anonymous function instead, so it's a _method_. The method uses the _this_ keyword to access the data. Remember that the _this_ keyword references the _object that owns the code_ where the _this_ keyword is. If the _this_ keyword were omitted, the code would look in the global namespace for _year_, _make_, and _model_.
 
 If you want to define an array of items and assign it to a property, you can use square brackets as shown below.
@@ -151,6 +153,8 @@ function getVehicle( theYear, theMake, theModel ) {
 }
 ```
 
+[b-object-instance.js](src/b-object-instance.js)
+
 The code takes advantage of JavaScript's dynamic nature to add _year_, _make_, _model_, and _getInfo_ to the object and then returns the object. Placing the code in a function makes it easy to call the getVehicle function to get a new Object.
 
 The encapsulation of the code to create an object is commonly referred to as using the _factory pattern_.  You can create multiple instances of Object and add properties dynamically to each instance, but the actual type is `Object`, not `vehicle`. The variable name `vehicle` is just used to hold the new `Object` type before returning it from the `getVehicle` function.
@@ -186,6 +190,8 @@ function Vehicle( theYear, theMake, theModel ) {
 }
 ```
 
+[c-object-encapsulation.js](src/c-object-encapsulation.js)
+
 Remember that the _this_ keyword references the object that owns the current code. This means that we must use the _new_ keyword to create an object from the class. Otherwise, the _this_ keyword will reference the global object and `getInfo` will be referring to a global variable.
 
 ```javascript
@@ -201,7 +207,35 @@ Two instances of the `Vehicle` class are being created, which means that two `Ve
 
 You have now created a class and constructed objects from the class. The Vehicle function you've used is known as a _constructor function_. The _new_ keyword created an object and executed the constructor function to initialize the object by creating the `year`, `make`, and `model` private variables and the public `getInfo` variable.
 
-Each instance has these four variables, and memory is allocated for them. That's what you want for the data but is that what you want for the `getInfo` variable that references a function? The answer is that it depends on what you are trying to do. In some scenarios, this behavior is desirable, but in others, you might want to replace the function across all objects. To do this, you need to use the _prototype_ pattern.
+Each instance has these four variables, and memory is allocated for them. That's what you want for the data but is that what you want for the `getInfo` variable that references a function? The answer is that it depends on what you are trying to do.
+
+Consider the following code that creates two `Vehicle` objects but then replaces the code in `getInfo` of the first `Vehicle` object with different code. Does this replace the code in the second object?
+
+```javascript
+function Vehicle( theYear, theMake, theModel ) {
+    var year = theYear;
+    var make = theMake;
+    var model = theModel;
+
+    this.getInfo = function() {
+        return 'Vehicle: ' + year + ' ' + make + ' ' + model;
+    };
+}
+
+var car1 = new Vehicle( 2000, 'Ford', 'Fusion' );
+var car2 = new Vehicle( 2010, 'BMW', 'Z4' );
+
+car1.getInfo = function() {
+    return 'This is a car';
+};
+
+car1.getInfo(); // 'This is a car'
+car2.getInfo(); // 'Vehicle: 2010 BMW Z4'
+```
+
+[d-method-replacement.js](src/d-method-replacement.js)
+
+In some scenarios, this behavior is desirable, but in others, you might want to replace the function across all objects. To do this, you need to use the _prototype_ pattern.
 
 **[⬆ top](#creating-javascript-objects)**
 
@@ -222,6 +256,8 @@ Vehicle.prototype.getInfo = function() {
     return 'Vehicle: ' + this.year + ' ' + this.make + ' ' + this.model;
 }
 ```
+
+[e-prototype-function.js](src/e-prototype-function.js)
 
 Remember, _this_ exposes the variable as a public property on `Vehicle` and _var_ defines the variable as private.
 
@@ -248,14 +284,16 @@ Vehicle.prototype.getInfo = function() {
 };
 ```
 
+[f-prototype-getters.js](src/f-prototype-getters.js)
+
 Here we can replace the `getInfo` method and, because the data is exposed as read-only, it's available to be used in the new method.
 
 ```javascript
 Vehicle.prototype.getInfo = function() {
-        return 'Car Year: ' + this.getYear()
+    return 'Car Year: ' + this.getYear()
             + ' Make: ' + this.getMake()
             + ' Model: ' + this.getModel();
-    };
+};
 ```
 
 In addition, the privileged getters are small, which minimizes the amount of memory consumed when each instance has a copy of the method. **Remember to only create getter methods as needed and to keep them small and concise.**
@@ -300,6 +338,8 @@ myApp.repair = {
 };
 ```
 
+[g-global-namespace.js](src/g-global-namespace.js)
+
 Here, `myApp` is the only entry in the global namespace. It represents the name of the application and its root namespace. _Notice that the object literal syntax is used to create an empty object and assign it to myApp._ Everything else is added to the object. Sub-namespaces can also be created and assigned to `myApp`.
 
 You can see a namespace was created by creating an object. Although only one entry is made in the global namespace, all the members of `myApp` are globally accessible.
@@ -312,6 +352,8 @@ You might also want to have logic to create the namespace object only if it hasn
 ```javascript
 var myApp = myApp || {};
 ```
+
+[h-namespace-singleton.js](src/h-namespace-singleton.js)
 
 You can use the object techniques defined earlier to make some members of the namespace private and some public. The difference is that the namespace is a _singleton object_, so you create a single instance for the namespace.
 
@@ -340,6 +382,8 @@ Here is an example of the use of an _immediately invoked function expression_ (I
     };
 })();
 ```
+
+[i-namespace-iife.js](src/i-namespace-iife.js)
 
 An _IIFE_ (pronounced iffy) is an anonymous function expression that has a set of parentheses at the end of it which indicates that you want to execute the function. The anonymous function expression is wrapped in parentheses to tell the JavaScript  interpreter that the function isn't only being defined; it's also being executed when the file is loaded.
 
@@ -393,6 +437,8 @@ var Vehicle = (function() {
     return Vehicle;
 })();
 ```
+
+[j-base-class.js](src/j-base-class.js)
 
 This class is wrapped in an IIFE. The wrapper encapsulates the function and the Vehicle prototype. There is no attempt to make the data private. The code works as follows:
 
@@ -476,6 +522,8 @@ var Car = (function( parent ) {
 })(Vehicle);
 ```
 
+[k-inherited-class.js](src/k-inherited-class.js)
+
 This completes `Car`, and `Boat` is similar except that `Boat` has a `propellerBladeQuantity`, which is initialized to three, instead of the `wheelQuantity` property. In addition, `getInfo` returns the vehicle type of `Boat` and calls the `Vehicle` `getInfo` method as follows.
 
 ```javascript
@@ -492,6 +540,8 @@ var Boat = (function( parent ) {
     return Boat;
 })(Vehicle);
 ```
+
+[k-inherited-class.js](src/k-inherited-class.js)
 
 To create the `Car` and `Boat` objects, you use the _new_ keyword with the `Car` or `Boat` variable. The following creates instances of both `Car` and `Boat` and invokes each of their object-specific methods.
 
