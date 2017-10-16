@@ -406,7 +406,7 @@ The following example shows adding a `billing` namespace under the `myApp` names
 })();
 ```
 
-This example also implements an IIFE to create the namespace. First, the `myApp` namespace is created if it doesn't already exist and is assigned to a local `rootNS` variable to save typing inside the namespace. Next, the billing namespace is created and assigned to the local `ns` variable to save typing inside the namespace. Finally, the private `taxRate` propertty is defined while the public `Invoice` is defined.
+This example also implements an IIFE to create the namespace. First, the `myApp` namespace is created if it doesn't already exist and is assigned to a local `rootNS` variable to save typing inside the namespace. Next, the billing namespace is created and assigned to the local `ns` variable to save typing inside the namespace. Finally, the private `taxRate` property is defined while the public `Invoice` is defined.
 
 **[⬆ top](#creating-javascript-objects)**
 
