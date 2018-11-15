@@ -11,24 +11,26 @@ npm install tape --save-dev
 ```
 
 ## Table of Contents
-1. [JavaScript Objects - MS Approach](#javascript-objects---ms-approach)
-1. [Object-oriented terminology](#object-oriented-terminology)
-1. [JavaScript's prototypal nature](#javascripts-prototypal-nature)
-1. [JavaScript's object-oriented caveat](#javascripts-object-oriented-caveat)
-1. [JavaScript object literal pattern](#javascript-object-literal-pattern)
-1. [Creating dynamic objects by using the factory pattern](#creating-dynamic-objects-by-using-the-factory-pattern)
-1. [Creating a class](#creating-a-class)
-1. [Using the prototype pattern](#using-the-prototype-pattern)
-1. [Debating the prototype/private compromise with getters](#debating-the-prototypeprivate-compromise-with-getters)
-1. [Implementing namespaces](#implementing-namespaces)
-    - [Namespace singleton object](#namespace-singleton-object)
-    - [Creating namespace with IIFE for data encapsulation](#creating-namespace-with-iife-for-data-encapsulation)
-    - [Creating a sub-namespace](#creating-a-sub-namespace)
-1. [Implementing inheritance](#implementing-inheritance)
-    - [Base class](#base-class)
-    - [Child class](#child-class)
-1. [Lesson Summary](#lesson-summary)
-1. [Lesson Review](#lesson-review)
+- [Creating JavaScript Objects](#creating-javascript-objects)
+    - [Table of Contents](#table-of-contents)
+    - [JavaScript Objects - MS Approach](#javascript-objects---ms-approach)
+    - [Object-oriented terminology](#object-oriented-terminology)
+    - [JavaScript's prototypal nature](#javascripts-prototypal-nature)
+    - [JavaScript's object-oriented caveat](#javascripts-object-oriented-caveat)
+    - [JavaScript object literal pattern](#javascript-object-literal-pattern)
+    - [Creating dynamic objects by using the factory pattern](#creating-dynamic-objects-by-using-the-factory-pattern)
+    - [Creating a class](#creating-a-class)
+    - [Using the prototype pattern](#using-the-prototype-pattern)
+    - [Debating the prototype/private compromise with getters](#debating-the-prototypeprivate-compromise-with-getters)
+    - [Implementing namespaces](#implementing-namespaces)
+        - [Namespace singleton object](#namespace-singleton-object)
+        - [Creating namespace with IIFE for data encapsulation](#creating-namespace-with-iife-for-data-encapsulation)
+        - [Creating a sub-namespace](#creating-a-sub-namespace)
+    - [Implementing inheritance](#implementing-inheritance)
+        - [Base class](#base-class)
+        - [Child class](#child-class)
+    - [Lesson Summary](#lesson-summary)
+    - [Lesson Review](#lesson-review)
 
 ## JavaScript Objects - MS Approach
 In JavaScript everything can be thought of as an object. This includes the six primitive data types:
@@ -184,7 +186,7 @@ function Vehicle( theYear, theMake, theModel ) {
     var make = theMake; // private
     var model = theModel; // private
 
-    this.getInfo - function() { // public
+    this.getInfo = function() { // public
         return 'Vehicle' + year + ' ' + make + ' ' + model;
     };
 }
